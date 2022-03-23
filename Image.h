@@ -48,6 +48,7 @@ public:
     void filterRed();
     void filterGreen();
     void filterBlue();
+    void blur();
 
     void rotate90cw();
     Rgb* getImage();

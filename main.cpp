@@ -17,6 +17,7 @@ using namespace std;
 #define IDM_EDIT_FilterGreen 8
 #define IDM_EDIT_FilterBlue 9
 #define IDM_EDIT_Reset 10
+#define IDM_EDIT_Blur 11
 string current_file;
 // The main window class name.
 Image image;
@@ -41,6 +42,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterRed, L"&Show Only Red"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterGreen, L"&Show Only Green"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterBlue, L"&Show Only Blue"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_Blur, L"&Blur"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_Reset, L"&Reset"); // Copy this line to add
 
 
@@ -87,6 +89,10 @@ void processMenu(HWND hWnd, WPARAM wParam)
         case IDM_EDIT_FilterBlue:
             image.load(current_file);
             image.filterBlue();
+            break;
+        case IDM_EDIT_Blur:
+           // image.load(current_file);
+            image.blur();
             break;
         case IDM_EDIT_Reset:
             image.load(current_file);

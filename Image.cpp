@@ -77,6 +77,41 @@ void Image::filterBlue()
         }
     }
 }
+
+
+void Image::blur()
+{
+    float rTotal = 0, gTotal=0, bTotal=0;
+    for(int y = 0 ; y < h; y++)
+    {
+        for(int x = 0 ; x < w; x++)
+        {
+            rTotal = 0; gTotal=0; bTotal=0;
+            if(x==0||y==0||x==w-1||y==h-1)
+                continue;
+            else
+            {
+                Rgb neighbours[] = {pixels[(y-1)*w+(x-1)],pixels[(y-1)*w+x],pixels[(y-1)*w+x+1]
+                                    ,pixels[(y)*w+x-1],pixels[(y)*w+x],pixels[(y)*w+x+1],
+                                    pixels[(y+1)*w+(x-1)],pixels[(y+1)*w+x],pixels[(y+1)*w+x+1]};
+
+                for(Rgb p: neighbours)
+                {
+                    rTotal += p.r;
+                    gTotal += p.g;
+                    bTotal += p.b;
+
+                }
+                pixels[y*w+x].r=rTotal/9;
+                pixels[y*w+x].g=gTotal/9;
+                pixels[y*w+x].b=bTotal/9;
+
+
+            }
+
+        }
+    }
+}
 void Image::scale(float amnt)
 {
     int newW = w*(amnt);
@@ -209,4 +244,6 @@ void Image::load(string filename)
         fprintf(stderr, "%s\n", err);
         ifs.close();
     }
+
+
 }
