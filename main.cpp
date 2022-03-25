@@ -146,8 +146,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 
-// delete memory DC since it is no longer required
-
             EndPaint(hWnd, &ps);
             break;
         case WM_MENUCOMMAND:
