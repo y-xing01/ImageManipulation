@@ -17,7 +17,9 @@ using namespace std;
 #define IDM_EDIT_FilterGreen 8
 #define IDM_EDIT_FilterBlue 9
 #define IDM_EDIT_Reset 10
-#define IDM_EDIT_Blur 11
+#define IDM_EDIT_AD1 11
+#define IDM_EDIT_AD2 12
+#define IDM_EDIT_AD3 13
 string current_file;
 // The main window class name.
 Image image;
@@ -32,6 +34,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 
     AppendMenuW(hMenu, MF_STRING, 2, L"&Open");
     AppendMenuW(hMenu, MF_STRING, IDM_FILE_SAVE, L"&Save As");
+    AppendMenuW(hMenu, MF_STRING, IDM_EDIT_Reset, L"&Reload");
     AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
     AppendMenuW(hMenu, MF_STRING, IDM_FILE_QUIT, L"&Quit");
 
@@ -42,8 +45,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterRed, L"&Show Only Red"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterGreen, L"&Show Only Green"); // Copy this line to add
     AppendMenuW(Alter, MF_STRING, IDM_EDIT_FilterBlue, L"&Show Only Blue"); // Copy this line to add
-    AppendMenuW(Alter, MF_STRING, IDM_EDIT_Blur, L"&Blur"); // Copy this line to add
-    AppendMenuW(Alter, MF_STRING, IDM_EDIT_Reset, L"&Reset"); // Copy this line to add
+    AppendMenuW(Alter, MF_SEPARATOR, 0, NULL);
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD1, L"&Additional Function 1"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD2, L"&Additional Function 2"); // Copy this line to add
+    AppendMenuW(Alter, MF_STRING, IDM_EDIT_AD3, L"&Additional Function 3"); // Copy this line to add
+     // Copy this line to add
 
 
 
@@ -90,9 +96,17 @@ void processMenu(HWND hWnd, WPARAM wParam)
             image.load(current_file);
             image.filterBlue();
             break;
-        case IDM_EDIT_Blur:
+        case IDM_EDIT_AD1:
            // image.load(current_file);
-            image.blur();
+            image.AdditionalFunction1();
+            break;
+        case IDM_EDIT_AD2:
+            // image.load(current_file);
+            image.AdditionalFunction2();
+            break;
+        case IDM_EDIT_AD3:
+            // image.load(current_file);
+            image.AdditionalFunction3();
             break;
         case IDM_EDIT_Reset:
             image.load(current_file);

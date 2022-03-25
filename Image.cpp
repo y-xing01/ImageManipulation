@@ -78,8 +78,15 @@ void Image::filterBlue()
     }
 }
 
+void Image::AdditionalFunction2()
+{
 
-void Image::blur()
+}
+void Image::AdditionalFunction3()
+{
+
+}
+void Image::AdditionalFunction1()
 {
     float rTotal = 0, gTotal=0, bTotal=0;
     for(int y = 0 ; y < h; y++)
