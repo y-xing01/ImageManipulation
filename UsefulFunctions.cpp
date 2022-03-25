@@ -132,7 +132,7 @@ string openfilename(const  char *filter, HWND owner) {
 
     return fileNameStr;
 }
-void dblBuffer(HWND hWnd, HDC hdc, LPRECT rcClientRect, Image &image) {
+void dblBuffer(HWND hWnd, HDC hdc, LPRECT rcClientRect, Image *image) {
     Rgb *pixels;
     HDC memDC = CreateCompatibleDC(hdc );
 
@@ -149,9 +149,9 @@ void dblBuffer(HWND hWnd, HDC hdc, LPRECT rcClientRect, Image &image) {
     HBITMAP oldBmp = (HBITMAP)SelectObject( memDC, bmp );
 
 
-    pixels = image.getImage();
-    int w = image.getWidth();
-    for(int r = 0; r < image.getHeight(); r++)
+    pixels = image->getImage();
+    int w = image->getWidth();
+    for(int r = 0; r < image->getHeight(); r++)
     {
         for(int c = 0; c < w; c++)
         {

@@ -14,7 +14,7 @@
 using namespace std;
 struct Rgb
 {
-    Rgb() : r(0.5), g(0.5), b(0)  {}
+    Rgb() : r(1), g(1), b(1)  {}
     Rgb(float rr) : r(rr), g(rr), b(rr) {}
     Rgb(float rr, float gg, float bb) : r(rr), g(gg), b(bb) {}
     float r, g, b;

@@ -1,7 +1,6 @@
 #include <windows.h>
 #include <iostream>
 #include <string.h>
-#include <tchar.h>
 #include <map>
 #include "UsefulFunctions.h"
 
@@ -22,11 +21,12 @@ using namespace std;
 #define IDM_EDIT_AD3 13
 string current_file;
 // The main window class name.
-Image image;
+Image *image;
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
         _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
 {
+    image = new Image();
 
     HMENU hMenubar = CreateMenu(); // The main menu bar
     HMENU hMenu = CreateMenu(); // the file menu
@@ -56,9 +56,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     AppendMenuW(hMenubar, MF_POPUP, (UINT_PTR)hMenu, L"&File");
     AppendMenuW(hMenubar, MF_POPUP, (UINT_PTR)Alter, L"&Edit");
 
-    return createWindow(hInstance, nCmdShow, hMenubar);
+    int ret = createWindow(hInstance, nCmdShow, hMenubar);
 
-
+    delete image;
+    return ret;
 }
 
 void processMenu(HWND hWnd, WPARAM wParam)
@@ -66,50 +67,50 @@ void processMenu(HWND hWnd, WPARAM wParam)
     switch(LOWORD(wParam)) {
         case IDM_FILE_OPEN:
             current_file = openfilename("Image(*.ppm)", hWnd);
-            image.load(current_file);
+            image->load(current_file);
             break;
         case IDM_FILE_SAVE: {
             string f = saveFilename("Image(*.ppm)", hWnd);
-            image.savePPM(f);
+            image->savePPM(f);
             break;
         }
         case IDM_EDIT_Greyscale:
-            image.load(current_file);
-            image.greyScale();
+            image->load(current_file);
+            image->greyScale();
              break;
         case IDM_EDIT_FlipHorizontal:
             //image.load(current_file);
-            image.flipHorizontal();
+            image->flipHorizontal();
             break;
         case IDM_EDIT_FlipVertical:
-             image.flipVertically();
+             image->flipVertically();
              break;
         case IDM_EDIT_FilterRed:
-             image.load(current_file);
-             image.filterRed();
+             image->load(current_file);
+             image->filterRed();
              break;
         case IDM_EDIT_FilterGreen:
-            image.load(current_file);
-            image.filterGreen();
+            image->load(current_file);
+            image->filterGreen();
             break;
         case IDM_EDIT_FilterBlue:
-            image.load(current_file);
-            image.filterBlue();
+            image->load(current_file);
+            image->filterBlue();
             break;
         case IDM_EDIT_AD1:
-           // image.load(current_file);
-            image.AdditionalFunction1();
+
+            image->AdditionalFunction1();
             break;
         case IDM_EDIT_AD2:
-            // image.load(current_file);
-            image.AdditionalFunction2();
+
+            image->AdditionalFunction2();
             break;
         case IDM_EDIT_AD3:
-            // image.load(current_file);
-            image.AdditionalFunction3();
+
+            image->AdditionalFunction3();
             break;
         case IDM_EDIT_Reset:
-            image.load(current_file);
+            image->load(current_file);
 
             break;
         case IDM_FILE_QUIT:
@@ -117,7 +118,7 @@ void processMenu(HWND hWnd, WPARAM wParam)
             SendMessage(hWnd, WM_CLOSE, 0, 0);
             break;
     }
-    SetWindowPos(hWnd, NULL, 0,0,image.getWidth()+20, image.getHeight()+60,SWP_NOMOVE);
+    SetWindowPos(hWnd, NULL, 0,0,image->getWidth()+20, image->getHeight()+60,SWP_NOMOVE);
     RedrawWindow(hWnd, NULL, NULL, RDW_INVALIDATE);
 
 }
@@ -127,9 +128,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     PAINTSTRUCT ps;
     HDC hdc;
-    TCHAR greeting[] = _T("Hello, Windows desktop!");
-    int r, c;
-    Rgb* pixels;
+
     RECT *rect = new RECT();
 
 
@@ -141,8 +140,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 */
             rect->top = 0;
             rect->left=0;
-            rect->bottom = image.getHeight();
-            rect->right = image.getWidth();
+            rect->bottom = image->getHeight();
+            rect->right = image->getWidth();
             dblBuffer(hWnd, hdc, rect, image);
 
 
