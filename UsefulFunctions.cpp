@@ -123,7 +123,7 @@ string openfilename(const  char *filter, HWND owner) {
     ofn.lpstrFile = fileName;
     ofn.nMaxFile = MAX_PATH;
     ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-    ofn.lpstrDefExt = ".ppm";
+    ofn.lpstrDefExt = "ppm";
 
     string fileNameStr;
 

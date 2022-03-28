@@ -66,12 +66,20 @@ void processMenu(HWND hWnd, WPARAM wParam)
 {
     switch(LOWORD(wParam)) {
         case IDM_FILE_OPEN:
-            current_file = openfilename("Image(*.ppm)", hWnd);
-            image->load(current_file);
+            current_file = openfilename("Image (*.ppm)\0*.ppm\0\0", hWnd);
+            if(!image->load(current_file))
+            {
+                MessageBox(NULL, _T("Error Loading image! Please try again"),
+                           _T("Load Error"),0);
+            }
             break;
         case IDM_FILE_SAVE: {
-            string f = saveFilename("Image(*.ppm)", hWnd);
-            image->savePPM(f);
+            string f = saveFilename("Image (*.ppm)\0*.ppm\0\0", hWnd);
+            if(!image->savePPM(f))
+            {
+                MessageBox(NULL, _T("Error saving image! Please try again"),
+                           _T("Save Error"),0);
+            }
             break;
         }
         case IDM_EDIT_Greyscale:

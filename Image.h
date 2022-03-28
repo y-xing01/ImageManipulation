@@ -38,20 +38,20 @@ public:
     {
         pixels = new Rgb[w * h];
     }
-    void savePPM(string filename);
-    void load(string filename);
-    void scale(float amnt);
-    void greyScale();
-    void inverse();
-    void flipHorizontal();
-    void flipVertically();
+    bool savePPM(string filename);
+    bool load(string filename);
+
     void filterRed();
     void filterGreen();
     void filterBlue();
+    void greyScale();
+    void flipHorizontal();
+    void flipVertically();
     void AdditionalFunction1();
     void AdditionalFunction2();
     void AdditionalFunction3();
-    void rotate90cw();
+
+    /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();
     int getWidth();
     int getHeight();
