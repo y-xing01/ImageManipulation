@@ -9,6 +9,7 @@ using namespace std;
 #define IDM_FILE_SAVE 1
 #define IDM_FILE_OPEN 2
 #define IDM_FILE_QUIT 3
+
 #define IDM_EDIT_Greyscale 4
 #define IDM_EDIT_FlipHorizontal 5
 #define IDM_EDIT_FlipVertical 6
@@ -19,7 +20,9 @@ using namespace std;
 #define IDM_EDIT_AD1 11
 #define IDM_EDIT_AD2 12
 #define IDM_EDIT_AD3 13
+#define IDM_FILE_LOAD_RAW 14
 string current_file;
+string fileType;
 // The main window class name.
 Image *image;
 
@@ -32,8 +35,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     HMENU hMenu = CreateMenu(); // the file menu
     HMENU Alter = CreateMenu(); // the edit menu
 
-    AppendMenuW(hMenu, MF_STRING, 2, L"&Open");
+    AppendMenuW(hMenu, MF_STRING, 2, L"&Open ppm");
     AppendMenuW(hMenu, MF_STRING, IDM_FILE_SAVE, L"&Save As");
+    AppendMenuW(hMenu, MF_STRING, IDM_FILE_LOAD_RAW, L"&Load Raw");
     AppendMenuW(hMenu, MF_STRING, IDM_EDIT_Reset, L"&Reload");
     AppendMenuW(hMenu, MF_SEPARATOR, 0, NULL);
     AppendMenuW(hMenu, MF_STRING, IDM_FILE_QUIT, L"&Quit");
@@ -67,7 +71,17 @@ void processMenu(HWND hWnd, WPARAM wParam)
     switch(LOWORD(wParam)) {
         case IDM_FILE_OPEN:
             current_file = openfilename("Image (*.ppm)\0*.ppm\0\0", hWnd);
+            fileType = "ppm";
             if(!image->load(current_file))
+            {
+                MessageBox(NULL, _T("Error Loading image! Please try again"),
+                           _T("Load Error"),0);
+            }
+            break;
+        case IDM_FILE_LOAD_RAW:
+            current_file = openfilename("Image (*.raw)\0*.raw\0\0", hWnd);
+            fileType = "raw";
+            if(!image->loadRaw(current_file))
             {
                 MessageBox(NULL, _T("Error Loading image! Please try again"),
                            _T("Load Error"),0);
@@ -118,7 +132,14 @@ void processMenu(HWND hWnd, WPARAM wParam)
             image->AdditionalFunction3();
             break;
         case IDM_EDIT_Reset:
-            image->load(current_file);
+            if(fileType=="ppm")
+            {
+                image->load(current_file);
+            }
+            else
+            {
+                image->loadRaw(current_file);
+            }
 
             break;
         case IDM_FILE_QUIT:

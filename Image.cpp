@@ -15,7 +15,10 @@ bool Image::load(string filename)
     return false;
 
 }
-
+bool Image::loadRaw(string filename)
+{
+    return false;
+}
 bool Image::savePPM(string filename)
 {
     return false;

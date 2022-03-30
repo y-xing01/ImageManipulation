@@ -40,7 +40,7 @@ public:
     }
     bool savePPM(string filename);
     bool load(string filename);
-
+    bool loadRaw(string filename);
     void filterRed();
     void filterGreen();
     void filterBlue();
