@@ -75,6 +75,12 @@ void Image::filterBlue() {
 }
 
 void Image::greyScale() {
+    for (int i = 0; i < w * h; i++) {
+        unsigned char greyscaleValue = (this->pixels[i].r + this->pixels[i].g + this->pixels[i].b) / 3;
+        this->pixels[i].r = greyscaleValue;
+        this->pixels[i].g = greyscaleValue;
+        this->pixels[i].b = greyscaleValue;
+    }
 }
 
 void Image::flipHorizontal() {
