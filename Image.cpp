@@ -29,10 +29,7 @@ bool Image::load(string filename) {
         }
         return true;
     }
-
-
     return false;
-
 }
 
 bool Image::loadRaw(string filename) {
