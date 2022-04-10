@@ -55,12 +55,13 @@ bool Image::savePPM(string filename) {
             ofs << r << g << b;
         }
         ofs.close();
+        return true;
     }
     catch (const char *err) {
         fprintf(stderr, "%s\n", err);
         ofs.close();
     }
-    return true;
+    return false;
 }
 
 
@@ -97,8 +98,7 @@ void Image::greyScale() {
 void Image::flipHorizontal() {
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w / 2; x++) {
-            Rgb temp;
-            temp = pixels[x + y * w];
+            Rgb temp = pixels[x + y * w];
             pixels[x + y * w] = pixels[y * w + (w - x)];
             pixels[y * w + (w - x)] = temp;
         }
@@ -108,8 +108,7 @@ void Image::flipHorizontal() {
 void Image::flipVertically() {
     for (int y = 0; y < h / 2; y++) {
         for (int x = 0; x < w; x++) {
-            Rgb temp;
-            temp = pixels[x + y * w];
+            Rgb temp = pixels[x + y * w];
             pixels[x + y * w] = pixels[x + (h - 1 - y) * w];
             pixels[x + (h - 1 - y) * w] = temp;
         }
