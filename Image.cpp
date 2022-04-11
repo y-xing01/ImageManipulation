@@ -115,14 +115,29 @@ void Image::flipVertically() {
     }
 }
 
+void Image::AdditionalFunction1() {
+    Rgb *temp = new Rgb[w * h];
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            int a = x * h + (h - 1 - y);
+            temp[a] = pixels[y * w + x ];
+        }
+    }
+    pixels = temp;
+    int tempHeight = h;
+    h = w;
+    w = tempHeight;
+    temp = nullptr;
+    delete[] temp;
+}
+
 void Image::AdditionalFunction2() {
 }
 
 void Image::AdditionalFunction3() {
 }
 
-void Image::AdditionalFunction1() {
-}
+
 
 /* Functions used by the GUI - DO NOT MODIFY */
 int Image::getWidth() {
