@@ -137,9 +137,9 @@ void Image::AdditionalFunction2() {
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
             Rgb temp = pixels[x + y * w];
-            pixels[x + y * w].r = 1 - temp.r;
-            pixels[x + y * w].g= 1 - temp.g;
-            pixels[x + y * w].b = 1 - temp.b;
+            pixels[x + y * w].r = 255 - temp.r;
+            pixels[x + y * w].g= 255 - temp.g;
+            pixels[x + y * w].b = 255 - temp.b;
         }
     }
 }
