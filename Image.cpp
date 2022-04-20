@@ -109,7 +109,6 @@ void Image::flipVertically() {
     for (int y = 0; y < h / 2; y++) {
         for (int x = 0; x < w; x++) {
             Rgb temp = pixels[x + y * w];
-            //Inverting color
             pixels[x + y * w] = pixels[x + (h - 1 - y) * w];
             pixels[x + (h - 1 - y) * w] = temp;
         }
@@ -134,6 +133,7 @@ void Image::AdditionalFunction1() {
 }
 
 void Image::AdditionalFunction2() {
+    //Inverting color
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
             Rgb temp = pixels[x + y * w];
