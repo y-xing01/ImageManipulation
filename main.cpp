@@ -129,7 +129,7 @@ void processMenu(HWND hWnd, WPARAM wParam)
             break;
         case IDM_EDIT_AD3:
 
-            image->AdditionalFunction3();
+            image->AdditionalFunction3(0, 0, 300, 300);
             break;
         case IDM_EDIT_Reset:
             if(fileType=="ppm")

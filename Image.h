@@ -21,9 +21,6 @@ struct Rgb
 };
 
 class Image {
-
-
-
     Image(const unsigned int _w, const unsigned int _h) :
             w(_w), h(_h), pixels(nullptr)
     {
@@ -49,7 +46,7 @@ public:
     void flipVertically();
     void AdditionalFunction1();
     void AdditionalFunction2();
-    void AdditionalFunction3();
+    void AdditionalFunction3(int newX, int newY, int newWidth, int newHeight);
 
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();

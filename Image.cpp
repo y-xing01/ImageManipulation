@@ -121,7 +121,7 @@ void Image::AdditionalFunction1() {
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
             int a = x * h + (h - 1 - y);
-            temp[a] = pixels[y * w + x ];
+            temp[a] = pixels[y * w + x];
         }
     }
     pixels = temp;
@@ -138,26 +138,44 @@ void Image::AdditionalFunction2() {
         for (int x = 0; x < w; x++) {
             Rgb temp = pixels[x + y * w];
             pixels[x + y * w].r = 255 - temp.r;
-            pixels[x + y * w].g= 255 - temp.g;
+            pixels[x + y * w].g = 255 - temp.g;
             pixels[x + y * w].b = 255 - temp.b;
         }
     }
 }
 
-void Image::AdditionalFunction3() {
-}
+void Image::AdditionalFunction3(int newX, int newY, int newWidth, int newHeight) {
+    Image *cropImage = new Image[newWidth, newHeight];
+    for (int y = 0; y < newHeight; y++) {
+        if ((y + newY) > h){
+            break;
+        }
+        for (int x = 0; x < newWidth; x++) {
+            if ((x + newX) > w){
+                break;
+            }
+            std::memcpy(&cropImage->pixels[(x + y * newWidth)],&this->pixels[(x + newX + (y + newY) * w)],3);
+        }
+        }
+    w = newWidth;
+    h = newHeight;
+
+    delete this->pixels;
+    this->pixels = cropImage->pixels;
+    cropImage = nullptr;
+    }
 
 
 
 /* Functions used by the GUI - DO NOT MODIFY */
-int Image::getWidth() {
-    return w;
-}
+    int Image::getWidth() {
+        return w;
+    }
 
-int Image::getHeight() {
-    return h;
-}
+    int Image::getHeight() {
+        return h;
+    }
 
-Rgb *Image::getImage() {
-    return pixels;
-}
+    Rgb *Image::getImage() {
+        return pixels;
+    }
