@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <cstring>
 #include "Image.h"
-
+#include <valarray>
 
 bool Image::load(string filename) {
     ifstream ifs(filename, std::ios::binary);
@@ -34,6 +34,23 @@ bool Image::load(string filename) {
 }
 
 bool Image::loadRaw(string filename) {
+    ifstream in(filename);
+
+    if (in.good()) {
+        in >> w;
+        in >> h;
+
+        for (int i = 0; i < w * h; ++i) {
+            float r, g, b;
+            in >> r >> g >> b;
+            pixels[i].r = pow(r, 1 / 2.2) * 255;
+            pixels[i].g = pow(r, 1 / 2.2) * 255;
+            pixels[i].b = pow(r, 1 / 2.2) * 255;
+            cout << r << pixels[i].r << endl;
+        }
+        in.close();
+
+    }
     return false;
 }
 
@@ -147,35 +164,39 @@ void Image::AdditionalFunction2() {
 void Image::AdditionalFunction3(int newX, int newY, int newWidth, int newHeight) {
     Image *cropImage = new Image[newWidth, newHeight];
     for (int y = 0; y < newHeight; y++) {
-        if ((y + newY) > h){
+        if ((y + newY) > h) {
             break;
         }
         for (int x = 0; x < newWidth; x++) {
-            if ((x + newX) > w){
+            if ((x + newX) > w) {
                 break;
             }
-            std::memcpy(&cropImage->pixels[(x + y * newWidth)],&this->pixels[(x + newX + (y + newY) * w)],3);
+            memcpy(&cropImage->pixels[(x + y * newWidth)], &this->pixels[(x + newX + (y + newY) * w)], 3);
         }
-        }
+    }
     w = newWidth;
     h = newHeight;
 
     delete this->pixels;
     this->pixels = cropImage->pixels;
     cropImage = nullptr;
-    }
+}
 
+
+void Image::AdvancedFeature() {
+
+}
 
 
 /* Functions used by the GUI - DO NOT MODIFY */
-    int Image::getWidth() {
-        return w;
-    }
+int Image::getWidth() {
+    return w;
+}
 
-    int Image::getHeight() {
-        return h;
-    }
+int Image::getHeight() {
+    return h;
+}
 
-    Rgb *Image::getImage() {
-        return pixels;
-    }
+Rgb *Image::getImage() {
+    return pixels;
+}
