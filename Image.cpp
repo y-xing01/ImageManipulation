@@ -64,7 +64,7 @@ bool Image::savePPM(string filename) {
         if (ofs.fail()) throw ("Can't open output file");
         ofs << "P6\n" << this->w << " " << this->h << "\n255\n";
         unsigned char r, g, b;
-        // loop over each pixel in the image, clamp and convert to byte format
+        // Looping over pixels in the image, clamping and convert it to byte format
         for (int i = 0; i < this->w * this->h; i++) {
             r = static_cast<unsigned char>(std::min(1.f, (float) this->pixels[i].r) * this->pixels[i].r);
             g = static_cast<unsigned char>(std::min(1.f, (float) this->pixels[i].g) * this->pixels[i].g);
@@ -137,11 +137,12 @@ void Image::AdditionalFunction1() {
     Rgb *temp = new Rgb[w * h];
     for (int y = 0; y < h; y++) {
         for (int x = 0; x < w; x++) {
+            //Replacing pixel with the previous
             int a = x * h + (h - 1 - y);
             temp[a] = pixels[y * w + x];
         }
     }
-    pixels = temp;
+    this->pixels = temp;
     int tempHeight = h;
     h = w;
     w = tempHeight;
@@ -162,15 +163,20 @@ void Image::AdditionalFunction2() {
 }
 
 void Image::AdditionalFunction3(int newX, int newY, int newWidth, int newHeight) {
+    //Cropping image with new provided x,y and width,height
     Image *cropImage = new Image[newWidth, newHeight];
     for (int y = 0; y < newHeight; y++) {
         if ((y + newY) > h) {
+            //Check to not get out of bounds for height
             break;
         }
         for (int x = 0; x < newWidth; x++) {
             if ((x + newX) > w) {
+                //Check to not get out of bounds for width
                 break;
             }
+            //copying data/pixel memory into the cropped image
+            //position inside of the crop image
             memcpy(&cropImage->pixels[(x + y * newWidth)], &this->pixels[(x + newX + (y + newY) * w)], 3);
         }
     }
@@ -178,15 +184,19 @@ void Image::AdditionalFunction3(int newX, int newY, int newWidth, int newHeight)
     h = newHeight;
 
     delete this->pixels;
+    //Replacing pixels
     this->pixels = cropImage->pixels;
     cropImage = nullptr;
+    delete[] cropImage;
 }
 
 
 void Image::AdvancedFeature(double scale) {
+    //Resizing image with a provided scale
     int newW = w * (scale);
     int newH = h * (scale);
     Rgb *temp = new Rgb[newW * newH];
+    //Finding offset
     float offsetX = (float) w / newW;
     float offsetY = (float) h / newH;
     float cy = 0;
@@ -195,12 +205,15 @@ void Image::AdvancedFeature(double scale) {
         for (int x = 0; x < newW; x++) {
             int nextX = cx;
             int nextY = cy;
+            //Replacing current pixel to the new pixel
             temp[x + y * newW] = pixels[nextX + nextY * w];
             cx += offsetX;
         }
         cy += offsetY;
     }
-    pixels = temp;
+    delete this->pixels;
+    //Replacing pixels
+    this->pixels = temp;
     w = newW;
     h = newH;
     temp = nullptr;
