@@ -47,7 +47,7 @@ public:
     void AdditionalFunction1();
     void AdditionalFunction2();
     void AdditionalFunction3(int newX, int newY, int newWidth, int newHeight);
-    void AdvancedFeature();
+    void AdvancedFeature(double scale);
 
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();

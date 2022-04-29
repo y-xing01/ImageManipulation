@@ -49,7 +49,7 @@ bool Image::loadRaw(string filename) {
             cout << r << pixels[i].r << endl;
         }
         in.close();
-
+        return true;
     }
     return false;
 }
@@ -183,8 +183,28 @@ void Image::AdditionalFunction3(int newX, int newY, int newWidth, int newHeight)
 }
 
 
-void Image::AdvancedFeature() {
-
+void Image::AdvancedFeature(double scale) {
+    int newW = w * (scale);
+    int newH = h * (scale);
+    Rgb *temp = new Rgb[newW * newH];
+    float offsetX = (float) w / newW;
+    float offsetY = (float) h / newH;
+    float cy = 0;
+    for (int y = 0; y < newH; y++) {
+        float cx = 0;
+        for (int x = 0; x < newW; x++) {
+            int nextX = cx;
+            int nextY = cy;
+            temp[x + y * newW] = pixels[nextX + nextY * w];
+            cx += offsetX;
+        }
+        cy += offsetY;
+    }
+    pixels = temp;
+    w = newW;
+    h = newH;
+    temp = nullptr;
+    delete[] temp;
 }
 
 
